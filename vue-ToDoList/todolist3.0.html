@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ToDoList</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src='https://unpkg.com/vue/dist/vue.js'></script>
+    <script src="./function.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>ToDoList</h1>
+        <div class="head">
+            <input class="text" type="text" v-model="inputValue" @keyup.enter="add" placeholder="write something...">
+            <button @click="add" class="addbtn">＋</button>
+        </div>
+        <!-- 筛选部分 -->
+        <ul class="filter">
+            <li @click="active=0" :class="{'choosen':active==0}">全部</li>
+            <li @click="active=1" :class="{'choosen':active==1}">已完成</li>
+            <li @click="active=2" :class="{'choosen':active==2}">未完成</li>
+
+        </ul>
+
+        <!-- 全部列表 -->
+        <div v-show="active==0">
+            <ul class="lists">
+                <li v-for="(item,index) in list">
+                    <input class="check" type="radio" @click='finish(item)' :checked="item.isFinished">
+                    <span :class="{finished:item.isFinished}">{{item.text}}</span>
+                    <button @click="remove(item)" class="deletebtn">Del</button>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 已完成 -->
+        <div v-show="active==1">
+            <ul class="lists">
+                <li v-for="(item,index) in finishedList">
+                    <input class="check" type="radio" @click='finish(item)' :checked="item.isFinished">
+                    <span :class="{finished:item.isFinished}">{{item.text}}</span>
+                    <button @click="remove(item)" class="deletebtn">Del</button>
+                </li>
+            </ul>
+        </div>
+        <!-- 未完成 -->
+        <div v-show="active==2">
+            <ul class="lists">
+                <li v-for="(item,index) in unfinishedList">
+                    <input class="check" type="radio" @click='finish(item)' :checked="item.isFinished">
+                    <span :class="{finished:item.isFinished}">{{item.text}}</span>
+                    <button @click="remove(item)" class="deletebtn">Del</button>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
